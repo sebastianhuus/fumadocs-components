@@ -1,0 +1,146 @@
+/**
+ * fumadocs-components — Steps
+ *
+ * CSS styles for the Steps component.
+ * Uses fumadocs CSS variables for seamless theme integration.
+ */
+
+/* Steps container */
+.fes-steps {
+  position: relative;
+  margin-left: 0.875rem;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Individual step */
+.fes-step {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  padding-bottom: 1.5rem;
+}
+
+/* Last step has no bottom padding */
+.fes-step:last-child {
+  padding-bottom: 0;
+}
+
+/* Vertical connecting line */
+.fes-step-line {
+  position: absolute;
+  left: 0;
+  top: 2rem;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(
+    to bottom,
+    var(--color-fd-border, #e5e7eb) 0%,
+    var(--color-fd-border, #e5e7eb) 80%,
+    transparent 100%
+  );
+}
+
+/* Hide line on last step */
+.fes-step:last-child .fes-step-line {
+  display: none;
+}
+
+/* Step indicator (number/letter/icon) */
+.fes-step-indicator {
+  position: absolute;
+  left: -0.875rem;
+  top: 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 9999px;
+  background-color: var(--color-fd-secondary, #f3f4f6);
+  color: var(--color-fd-secondary-foreground, #374151);
+  font-size: 0.75rem;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+/* Icon styling within indicator */
+.fes-step-indicator svg {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+
+/* Step content area */
+.fes-step-content {
+  width: 100%;
+  overflow: hidden;
+  padding-left: 1.5rem;
+}
+
+/* Step title */
+.fes-step-title {
+  margin: 0;
+  padding-top: 0.25rem;
+  font-weight: 600;
+  color: var(--color-fd-foreground, #111827);
+}
+
+/* Step body content */
+.fes-step-body {
+  margin-top: 0.5rem;
+  color: var(--color-fd-muted-foreground, #6b7280);
+}
+
+/* Remove top margin from first element in body */
+.fes-step-body > :first-child {
+  margin-top: 0;
+}
+
+/* Remove bottom margin from last element in body */
+.fes-step-body > :last-child {
+  margin-bottom: 0;
+}
+
+/* Hide body if empty */
+.fes-step-body:empty {
+  display: none;
+}
+
+/* When there's no title, adjust body spacing */
+.fes-step-content > .fes-step-body:first-child {
+  margin-top: 0.25rem;
+}
+
+/* Dark mode support */
+.dark .fes-step-line {
+  background: linear-gradient(
+    to bottom,
+    var(--color-fd-border, #374151) 0%,
+    var(--color-fd-border, #374151) 80%,
+    transparent 100%
+  );
+}
+
+.dark .fes-step-indicator {
+  background-color: var(--color-fd-secondary, #374151);
+  color: var(--color-fd-secondary-foreground, #f9fafb);
+}
+
+.dark .fes-step-title {
+  color: var(--color-fd-foreground, #f9fafb);
+}
+
+.dark .fes-step-body {
+  color: var(--color-fd-muted-foreground, #9ca3af);
+}
+
+/* Responsive adjustments */
+@media (min-width: 640px) {
+  .fes-steps {
+    margin-left: 1rem;
+  }
+
+  .fes-step-content {
+    padding-left: 1.75rem;
+  }
+}
