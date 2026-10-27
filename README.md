@@ -216,7 +216,7 @@ Works in server and client components. It renders nothing when `items` is empty.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/previews/recently-updated-list-dark.png">
-  <img alt="RecentlyUpdatedList with four pages" src="docs/previews/recently-updated-list-light.png" width="320">
+  <img alt="RecentlyUpdatedList with four pages" src="docs/previews/recently-updated-list-light.png" width="360">
 </picture>
 
 **Dependencies:** none beyond `next/link` and Tailwind with the Fumadocs tokens.
