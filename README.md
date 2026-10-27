@@ -10,6 +10,11 @@ These components use Fumadocs CSS variables (`fd-border`, `fd-primary`, etc.) fo
 
 Content frame with click-to-zoom on images.
 
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/previews/frame-dark.png">
+  <img alt="Frame with a caption" src="docs/previews/frame-light.png" width="480">
+</picture>
+
 **Dependencies:** `pnpm add react-medium-image-zoom`
 
 ```tsx
@@ -209,6 +214,11 @@ List of recently changed pages: a link, an optional small line under it (such as
 
 Works in server and client components. It renders nothing when `items` is empty.
 
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/previews/recently-updated-list-dark.png">
+  <img alt="RecentlyUpdatedList with four pages" src="docs/previews/recently-updated-list-light.png" width="320">
+</picture>
+
 **Dependencies:** none beyond `next/link` and Tailwind with the Fumadocs tokens.
 
 ```tsx
@@ -324,6 +334,20 @@ Components use Fumadocs CSS variables with sensible fallbacks:
 | `--color-fd-secondary-foreground` | Steps |
 
 These are set automatically by `fumadocs-ui`. If using outside Fumadocs, define these variables in your CSS.
+
+## Previews
+
+The screenshots in this README are generated from a small Fumadocs site in `demo/`. It copies `components/` into itself, renders each component on its own page, and Playwright saves a light and a dark PNG of every `data-preview` wrapper to `docs/previews/`.
+
+```bash
+cd demo
+pnpm install
+pnpm exec playwright install chromium   # first time only
+pnpm previews                           # build, screenshot, write docs/previews/*.png
+pnpm dev                                # browse the demo at http://localhost:3000
+```
+
+To add a component: add `demo/content/docs/<name>.mdx` with the component inside a `<div data-preview="<name>">`, register it in `demo/src/mdx-components.tsx`, then run `pnpm previews`. Fonts come from your system, so regenerate on the same machine when updating existing screenshots to keep diffs small.
 
 ## License
 
