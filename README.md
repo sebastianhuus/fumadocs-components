@@ -203,6 +203,78 @@ import '@/components/steps/styles/steps.css';
 
 ---
 
+### RecentlyUpdatedList
+
+List of recently changed pages: a link, an optional small line under it (such as the section) and an optional line under that (such as "Last updated 12 Oct by Ada"). It only lays out the list. It fetches nothing and holds no state, so every piece of text comes in through `items` and you decide where the data comes from.
+
+Works in server and client components. It renders nothing when `items` is empty.
+
+**Dependencies:** none beyond `next/link` and Tailwind with the Fumadocs tokens.
+
+```tsx
+import { RecentlyUpdatedList } from '@/components/recently-updated-list';
+
+<RecentlyUpdatedList
+  title="Recently updated"
+  items={[
+    {
+      href: '/docs/getting-started',
+      title: 'Getting started',
+      trail: 'Guides',
+      meta: 'Last updated 12 Oct by Ada',
+    },
+    { href: '/docs/api', title: 'API reference', trail: 'Reference' },
+  ]}
+/>
+```
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `items` | `RecentlyUpdatedItem[]` | — | The entries to show, in the order given |
+| `title` | `ReactNode` | — | Heading above the list. No heading when left out |
+| `className` | `string` | — | Classes for the wrapping `div` |
+
+Each item:
+
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `href` | `string` | — | Link target. Also used as the React key, so keep it unique |
+| `title` | `ReactNode` | — | Link text |
+| `trail` | `ReactNode` | — | Small line under the title, e.g. the section |
+| `meta` | `ReactNode` | — | Line under that, e.g. date and author. Pass your own element to format it however you like |
+
+The list has no wording of its own, so there is nothing to translate. Dates and authors are formatted by you, in `meta`.
+
+#### Feeding it data
+
+Sorting, filtering and date lookup are yours to write, because they depend on where your dates come from. A wrapper can be this small:
+
+```tsx
+import { source } from '@/lib/source';
+import { RecentlyUpdatedList } from '@/components/recently-updated-list';
+
+export function RecentlyUpdated({ limit = 8 }: { limit?: number }) {
+  const items = source
+    .getPages()
+    // `lastModified` is whatever date you have: a plugin, frontmatter, a CMS field.
+    .filter((page) => page.data.lastModified)
+    .sort((a, b) => b.data.lastModified!.getTime() - a.data.lastModified!.getTime())
+    .slice(0, limit)
+    .map((page) => ({
+      href: page.url,
+      title: page.data.title,
+      trail: page.path.split('/').slice(0, -1).join(' › '),
+      meta: `Last updated ${page.data.lastModified!.toLocaleDateString('en-GB')}`,
+    }));
+
+  return <RecentlyUpdatedList title="Recently updated" items={items} />;
+}
+```
+
+A real project can put more behind the same shape: dates and authors from `git log` (read again on every request in dev), folder titles from each `meta.json` for `trail`, and a `section` option to limit the list to one folder. None of that is part of the list component.
+
+---
+
 ## MDX Registration
 
 Register components in your `mdx-components.tsx`:
@@ -235,6 +307,8 @@ export function getMDXComponents(components?: MDXComponents): MDXComponents {
 }
 ```
 
+`RecentlyUpdatedList` is not in this list on purpose. It is safe in client bundles, but an MDX author cannot supply `items`, so there is nothing useful to write in a page. Render it from a page or layout, or from a wrapper like the one above.
+
 ## Theming
 
 Components use Fumadocs CSS variables with sensible fallbacks:
@@ -245,7 +319,7 @@ Components use Fumadocs CSS variables with sensible fallbacks:
 | `--color-fd-secondary` | Frame, Update, Steps |
 | `--color-fd-primary` | Tooltip, Update |
 | `--color-fd-foreground` | Tooltip, Color, Steps |
-| `--color-fd-muted-foreground` | Frame, Tooltip, Color, Update, Steps |
+| `--color-fd-muted-foreground` | Frame, Tooltip, Color, Update, Steps, RecentlyUpdatedList |
 | `--color-fd-card` | Tooltip |
 | `--color-fd-secondary-foreground` | Steps |
 
