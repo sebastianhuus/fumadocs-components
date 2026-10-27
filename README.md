@@ -255,6 +255,26 @@ Each item:
 
 The list has no wording of its own, so there is nothing to translate. Dates and authors are formatted by you, in `meta`.
 
+#### Example: wiki front page
+
+The list works well as a sidebar next to the main content of a landing page:
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/previews/wiki-home-dark.png">
+  <img alt="Wiki front page with the main content on the left and RecentlyUpdatedList as a right-hand sidebar" src="docs/previews/wiki-home-light.png" width="720">
+</picture>
+
+```tsx
+<div className="grid grid-cols-[1fr_17rem]">
+  <main className="px-10 py-12">{/* hero, search, cards, popular articles */}</main>
+  <aside className="border-l border-fd-border px-6 py-12">
+    <RecentlyUpdatedList title="Recently updated" items={items} />
+  </aside>
+</div>
+```
+
+The full page is `demo/src/demo/wiki-home-example.tsx`.
+
 #### Feeding it data
 
 Sorting, filtering and date lookup are yours to write, because they depend on where your dates come from. A wrapper can be this small:

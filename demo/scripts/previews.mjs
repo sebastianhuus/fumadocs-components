@@ -7,9 +7,13 @@ import { chromium } from 'playwright';
 const PORT = 4321;
 const BASE = `http://localhost:${PORT}`;
 const OUT = new URL('../../docs/previews/', import.meta.url).pathname;
-const pages = readdirSync(new URL('../content/docs/', import.meta.url))
-  .filter((f) => f.endsWith('.mdx') && f !== 'index.mdx')
-  .map((f) => f.replace(/\.mdx$/, ''));
+// One docs page per component, plus full-page examples under src/app/examples/.
+const pages = [
+  ...readdirSync(new URL('../content/docs/', import.meta.url))
+    .filter((f) => f.endsWith('.mdx') && f !== 'index.mdx')
+    .map((f) => `docs/${f.replace(/\.mdx$/, '')}`),
+  ...readdirSync(new URL('../src/app/examples/', import.meta.url)).map((d) => `examples/${d}`),
+];
 
 mkdirSync(OUT, { recursive: true });
 
@@ -41,7 +45,7 @@ try {
     const page = await context.newPage();
 
     for (const name of pages) {
-      await page.goto(`${BASE}/docs/${name}`, { waitUntil: 'networkidle' });
+      await page.goto(`${BASE}/${name}`, { waitUntil: 'networkidle' });
       await page.addStyleTag({
         content: '*, *::before, *::after { animation: none !important; transition: none !important; }',
       });
