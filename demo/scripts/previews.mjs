@@ -54,7 +54,14 @@ try {
       for (const el of await page.locator('[data-preview]').all()) {
         const preview = await el.getAttribute('data-preview');
         const file = `${OUT}${preview}-${colorScheme}.png`;
-        await el.screenshot({ path: file });
+        // Make everything behind the element transparent so rounded corners are cut out
+        // instead of sitting on a page-colored box.
+        await el.evaluate((node) => {
+          for (let a = node.parentElement; a; a = a.parentElement) {
+            a.style.setProperty('background', 'transparent', 'important');
+          }
+        });
+        await el.screenshot({ path: file, omitBackground: true });
         console.log('wrote', file);
       }
     }

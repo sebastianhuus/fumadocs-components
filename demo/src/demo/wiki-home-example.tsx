@@ -24,7 +24,7 @@ const popular = [
 
 export function WikiHomeExample() {
   return (
-    <div className="w-[1100px] bg-fd-background text-fd-foreground">
+    <div className="w-[1100px] overflow-hidden rounded-2xl border border-fd-border bg-fd-background text-fd-foreground">
       <header className="flex items-center justify-between border-b border-fd-border px-8 py-4">
         <div className="flex items-center gap-2 font-semibold">
           <Sparkles className="size-5" />
