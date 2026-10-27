@@ -10,10 +10,14 @@ These components use Fumadocs CSS variables (`fd-border`, `fd-primary`, etc.) fo
 
 Content frame with click-to-zoom on images.
 
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/previews/frame-dark.png">
-  <img alt="Frame with a caption" src="docs/previews/frame-light.png" width="480">
-</picture>
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/previews/frame-dark.png">
+    <img alt="Frame with a caption" src="docs/previews/frame-light.png" width="480">
+  </picture>
+  <br>
+  <sub>Frame around an image, with a caption</sub>
+</p>
 
 **Dependencies:** `pnpm add react-medium-image-zoom`
 
@@ -214,10 +218,14 @@ List of recently changed pages: a link, an optional small line under it (such as
 
 Works in server and client components. It renders nothing when `items` is empty.
 
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/previews/recently-updated-list-dark.png">
-  <img alt="RecentlyUpdatedList with four pages" src="docs/previews/recently-updated-list-light.png" width="360">
-</picture>
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/previews/recently-updated-list-dark.png">
+    <img alt="RecentlyUpdatedList with four pages" src="docs/previews/recently-updated-list-light.png" width="360">
+  </picture>
+  <br>
+  <sub>RecentlyUpdatedList with section trail, date and author</sub>
+</p>
 
 **Dependencies:** none beyond `next/link` and Tailwind with the Fumadocs tokens.
 
@@ -259,10 +267,14 @@ The list has no wording of its own, so there is nothing to translate. Dates and 
 
 The list works well as a sidebar next to the main content of a landing page:
 
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/previews/wiki-home-dark.png">
-  <img alt="Wiki front page with the main content on the left and RecentlyUpdatedList as a right-hand sidebar" src="docs/previews/wiki-home-light.png" width="720">
-</picture>
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/previews/wiki-home-dark.png">
+    <img alt="Wiki front page with the main content on the left and RecentlyUpdatedList as a right-hand sidebar" src="docs/previews/wiki-home-light.png" width="720">
+  </picture>
+  <br>
+  <sub>RecentlyUpdatedList as a sidebar on a wiki front page</sub>
+</p>
 
 ```tsx
 <div className="grid grid-cols-[1fr_17rem]">
