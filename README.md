@@ -107,6 +107,15 @@ import { Icon } from '@/components/icon';
 
 Hover tooltip with optional call-to-action link.
 
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/previews/tooltip-dark.png">
+    <img alt="Tooltip with a call-to-action, shown on hover" src="docs/previews/tooltip-light.png" width="420">
+  </picture>
+  <br>
+  <sub>Tooltip with a call-to-action, shown on hover</sub>
+</p>
+
 **Dependencies:** none
 
 ```tsx

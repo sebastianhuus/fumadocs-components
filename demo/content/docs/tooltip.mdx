@@ -1,0 +1,14 @@
+---
+title: Tooltip
+description: Hover tooltip with optional call-to-action link.
+---
+
+{/* The sentence stays on one line inside one <p>: MDX would otherwise wrap loose text in its own paragraph. */}
+
+<div data-preview="tooltip" className="w-[560px]">
+  <Frame>
+    <div className="px-6 pb-10 pt-36 bg-fd-background text-center text-sm">
+      <p>Hover over <span data-preview-hover className="inline-block"><Tooltip tip="Learn more about this feature, or jump straight to the docs." cta="Read docs" href="/docs/feature">a term with a link</Tooltip></span> for more detail.</p>
+    </div>
+  </Frame>
+</div>

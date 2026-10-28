@@ -61,7 +61,14 @@ try {
             a.style.setProperty('background', 'transparent', 'important');
           }
         });
+        // Previews of hover-only UI mark the trigger with `data-preview-hover`.
+        const trigger = el.locator('[data-preview-hover]').first();
+        if (await trigger.count()) {
+          await trigger.hover();
+          await page.waitForTimeout(200);
+        }
         await el.screenshot({ path: file, omitBackground: true });
+        await page.mouse.move(0, 0);
         console.log('wrote', file);
       }
     }
