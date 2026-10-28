@@ -231,6 +231,15 @@ import { Update } from '@/components/update';
 
 Numbered step-by-step procedures with multiple counter styles and custom icons.
 
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/previews/steps-dark.png">
+    <img alt="Steps with a custom icon on the last step" src="docs/previews/steps-light.png" width="420">
+  </picture>
+  <br>
+  <sub>Steps with a custom icon on the last step</sub>
+</p>
+
 **Dependencies:** `pnpm add tailwind-merge`
 
 **Setup:** Copy `components/steps/` and import the CSS in your layout or `mdx-components.tsx`:
