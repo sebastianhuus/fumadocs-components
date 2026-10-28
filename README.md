@@ -144,6 +144,24 @@ import { Tooltip } from '@/components/tooltip';
 
 Color palette display with click-to-copy. Supports compact grid and table variants, light/dark theme-aware colors, and all CSS color formats (hex, rgb, hsl, oklch).
 
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/previews/color-compact-dark.png">
+    <img alt="Color, compact variant (the last swatch is theme-aware)" src="docs/previews/color-compact-light.png" width="420">
+  </picture>
+  <br>
+  <sub>Color, compact variant (the last swatch is theme-aware)</sub>
+</p>
+
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/previews/color-table-dark.png">
+    <img alt="Color, table variant with one row per palette" src="docs/previews/color-table-light.png" width="420">
+  </picture>
+  <br>
+  <sub>Color, table variant with one row per palette</sub>
+</p>
+
 **Dependencies:** none
 
 ```tsx
