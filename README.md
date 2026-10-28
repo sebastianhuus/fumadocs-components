@@ -41,6 +41,15 @@ import { Frame } from '@/components/frame';
 
 Responsive CSS grid wrapper.
 
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/previews/columns-dark.png">
+    <img alt="Columns with three cards" src="docs/previews/columns-light.png" width="480">
+  </picture>
+  <br>
+  <sub>Columns with three cards</sub>
+</p>
+
 **Dependencies:** none
 
 ```tsx
