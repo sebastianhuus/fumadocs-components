@@ -1,0 +1,27 @@
+---
+title: Update
+description: Changelog entry with sticky labels, tags and anchor links.
+---
+
+{/* Frame is `not-prose`, which would strip the typography Update gets in a real docs page, so this wrapper copies Frame's look without that class. */}
+
+<div data-preview="update" className="w-[760px] rounded-2xl border border-fd-border bg-fd-secondary/50 p-2">
+<div className="flow-root rounded-xl bg-fd-background px-6">
+
+<Update label="v2.1.0" description="Jan 15, 2026" tags={['feature', 'breaking']}>
+
+Added dark mode support and redesigned the settings page.
+
+- New theme toggle in the header
+- Settings are now split into tabs
+
+</Update>
+
+<Update label="v2.0.2" description="Dec 2, 2025" tags={['fix']}>
+
+Fixed a crash when opening a project with no files.
+
+</Update>
+
+</div>
+</div>

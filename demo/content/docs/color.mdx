@@ -1,0 +1,54 @@
+---
+title: Color
+description: Color palette display with click-to-copy.
+---
+
+<div data-preview="color-compact" className="w-[560px]">
+  <Frame>
+    <div className="flow-root px-6 bg-fd-background">
+      <Color variant="compact">
+        <ColorItem name="Blue" value="#3b82f6" />
+        <ColorItem name="Red" value="#ef4444" />
+        <ColorItem name="Green" value="#22c55e" />
+        <ColorItem name="Amber" value="#f59e0b" />
+        <ColorItem name="Violet" value="#8b5cf6" />
+        <ColorItem name="Pink" value="#ec4899" />
+        <ColorItem name="Slate" value="#64748b" />
+        <ColorItem name="Background" value={{ light: '#ffffff', dark: '#0a0a0a' }} />
+      </Color>
+    </div>
+  </Frame>
+</div>
+
+<div data-preview="color-table" className="w-[560px] mt-8">
+  <Frame>
+    <div className="flow-root px-6 bg-fd-background">
+      <Color variant="table">
+        <ColorRow title="Blue">
+          <ColorItem value="#eff6ff" />
+          <ColorItem value="#bfdbfe" />
+          <ColorItem value="#60a5fa" />
+          <ColorItem value="#3b82f6" />
+          <ColorItem value="#1d4ed8" />
+          <ColorItem value="#1e3a8a" />
+        </ColorRow>
+        <ColorRow title="Green">
+          <ColorItem value="#f0fdf4" />
+          <ColorItem value="#bbf7d0" />
+          <ColorItem value="#4ade80" />
+          <ColorItem value="#22c55e" />
+          <ColorItem value="#15803d" />
+          <ColorItem value="#14532d" />
+        </ColorRow>
+        <ColorRow title="Slate">
+          <ColorItem value="#f8fafc" />
+          <ColorItem value="#cbd5e1" />
+          <ColorItem value="#94a3b8" />
+          <ColorItem value="#64748b" />
+          <ColorItem value="#334155" />
+          <ColorItem value="#0f172a" />
+        </ColorRow>
+      </Color>
+    </div>
+  </Frame>
+</div>

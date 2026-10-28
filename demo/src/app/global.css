@@ -2,4 +2,6 @@
 @import 'fumadocs-ui/css/neutral.css';
 @import 'fumadocs-ui/css/preset.css';
 @source '../**/*.{ts,tsx}';
+/* src/components is a gitignored copy (see scripts/sync-components.mjs); Tailwind skips ignored files unless the folder is registered on its own. */
+@source '../components';
 @source '../../content/**/*.mdx';

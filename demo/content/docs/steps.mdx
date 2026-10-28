@@ -1,0 +1,34 @@
+---
+title: Steps
+description: Numbered step-by-step procedures.
+---
+
+{/* Same Frame-like wrapper as the Update page: Frame is `not-prose`, which would strip inline code styling. */}
+
+<div data-preview="steps" className="w-[560px] rounded-2xl border border-fd-border bg-fd-secondary/50 p-2">
+<div className="flow-root rounded-xl bg-fd-background px-8">
+
+<Steps>
+
+<Step title="Install dependencies">
+
+Run `pnpm add fumadocs-core` in your project.
+
+</Step>
+
+<Step title="Configure">
+
+Add the config file and point it at your `content/docs` folder.
+
+</Step>
+
+<Step title="Done" icon={<Icon name="check" size={14} />}>
+
+Start the dev server and open the docs.
+
+</Step>
+
+</Steps>
+
+</div>
+</div>

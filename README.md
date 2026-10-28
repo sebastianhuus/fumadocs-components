@@ -41,6 +41,15 @@ import { Frame } from '@/components/frame';
 
 Responsive CSS grid wrapper.
 
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/previews/columns-dark.png">
+    <img alt="Columns with three cards" src="docs/previews/columns-light.png" width="480">
+  </picture>
+  <br>
+  <sub>Columns with three cards</sub>
+</p>
+
 **Dependencies:** none
 
 ```tsx
@@ -65,6 +74,15 @@ import { Columns } from '@/components/columns';
 
 Dynamic Lucide icon renderer. Pass icon names as strings (useful in MDX).
 
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/previews/icon-dark.png">
+    <img alt="Icon with different names, colors, stroke widths and sizes" src="docs/previews/icon-light.png" width="420">
+  </picture>
+  <br>
+  <sub>Icon with different names, colors, stroke widths and sizes</sub>
+</p>
+
 **Dependencies:** `pnpm add lucide-react`
 
 ```tsx
@@ -88,6 +106,15 @@ import { Icon } from '@/components/icon';
 ### Tooltip
 
 Hover tooltip with optional call-to-action link.
+
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/previews/tooltip-dark.png">
+    <img alt="Tooltip with a call-to-action, shown on hover" src="docs/previews/tooltip-light.png" width="420">
+  </picture>
+  <br>
+  <sub>Tooltip with a call-to-action, shown on hover</sub>
+</p>
 
 **Dependencies:** none
 
@@ -116,6 +143,24 @@ import { Tooltip } from '@/components/tooltip';
 ### Color
 
 Color palette display with click-to-copy. Supports compact grid and table variants, light/dark theme-aware colors, and all CSS color formats (hex, rgb, hsl, oklch).
+
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/previews/color-compact-dark.png">
+    <img alt="Color, compact variant (the last swatch is theme-aware)" src="docs/previews/color-compact-light.png" width="420">
+  </picture>
+  <br>
+  <sub>Color, compact variant (the last swatch is theme-aware)</sub>
+</p>
+
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/previews/color-table-dark.png">
+    <img alt="Color, table variant with one row per palette" src="docs/previews/color-table-light.png" width="420">
+  </picture>
+  <br>
+  <sub>Color, table variant with one row per palette</sub>
+</p>
 
 **Dependencies:** none
 
@@ -153,6 +198,15 @@ import { Color, ColorItem, ColorRow } from '@/components/color';
 
 Changelog/update entry with sticky labels, tags, and anchor links.
 
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/previews/update-dark.png">
+    <img alt="Update entries with labels, descriptions and tags" src="docs/previews/update-light.png" width="570">
+  </picture>
+  <br>
+  <sub>Update entries with labels, descriptions and tags</sub>
+</p>
+
 **Dependencies:** none
 
 ```tsx
@@ -176,6 +230,15 @@ import { Update } from '@/components/update';
 ### Steps
 
 Numbered step-by-step procedures with multiple counter styles and custom icons.
+
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/previews/steps-dark.png">
+    <img alt="Steps with a custom icon on the last step" src="docs/previews/steps-light.png" width="420">
+  </picture>
+  <br>
+  <sub>Steps with a custom icon on the last step</sub>
+</p>
 
 **Dependencies:** `pnpm add tailwind-merge`
 
