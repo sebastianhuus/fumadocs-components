@@ -198,6 +198,15 @@ import { Color, ColorItem, ColorRow } from '@/components/color';
 
 Changelog/update entry with sticky labels, tags, and anchor links.
 
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/previews/update-dark.png">
+    <img alt="Update entries with labels, descriptions and tags" src="docs/previews/update-light.png" width="570">
+  </picture>
+  <br>
+  <sub>Update entries with labels, descriptions and tags</sub>
+</p>
+
 **Dependencies:** none
 
 ```tsx
