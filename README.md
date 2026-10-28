@@ -74,6 +74,15 @@ import { Columns } from '@/components/columns';
 
 Dynamic Lucide icon renderer. Pass icon names as strings (useful in MDX).
 
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/previews/icon-dark.png">
+    <img alt="Icon with different names, colors, stroke widths and sizes" src="docs/previews/icon-light.png" width="420">
+  </picture>
+  <br>
+  <sub>Icon with different names, colors, stroke widths and sizes</sub>
+</p>
+
 **Dependencies:** `pnpm add lucide-react`
 
 ```tsx
