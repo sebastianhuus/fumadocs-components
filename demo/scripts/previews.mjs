@@ -17,8 +17,8 @@ const pages = [
 
 // Parts of the page outside the content (such as the table of contents), captured by selector.
 // The table of contents is only shown on wide screens, so these use a wider viewport. `clipTo` crops
-// the capture to the area those elements cover, as the element itself is as tall as the page.
-const regions = [{ page: 'docs/linked-steps', preview: 'linked-steps-toc', selector: '#nd-toc', clipTo: '#toc-title, #nd-toc a', width: 1400 }];
+// the capture to the area those elements cover (the element itself is as tall as the page) and frames it.
+const regions = [{ page: 'docs/linked-steps', preview: 'linked-steps-toc', selector: '#nd-toc', clipTo: '#toc-title, #nd-toc a', width: 1600 }];
 
 mkdirSync(OUT, { recursive: true });
 
@@ -56,15 +56,13 @@ try {
       });
       await page.evaluate(() => document.fonts.ready);
 
-      const wide = regions.find((r) => r.page === name)?.width;
-      if (wide) await page.setViewportSize({ width: wide, height: 900 });
-
       const targets = [
-        ...(await page.locator('[data-preview]').all()).map((el) => ({ el, selectorPreview: null, clipTo: null })),
-        ...regions.filter((r) => r.page === name).map((r) => ({ el: page.locator(r.selector), selectorPreview: r.preview, clipTo: r.clipTo })),
+        ...(await page.locator('[data-preview]').all()).map((el) => ({ el, selectorPreview: null, clipTo: null, width: 1200 })),
+        ...regions.filter((r) => r.page === name).map((r) => ({ el: page.locator(r.selector), selectorPreview: r.preview, clipTo: r.clipTo, width: r.width })),
       ];
 
-      for (const { el, selectorPreview, clipTo } of targets) {
+      for (const { el, selectorPreview, clipTo, width } of targets) {
+        await page.setViewportSize({ width, height: 900 });
         const preview = selectorPreview ?? (await el.getAttribute('data-preview'));
         const file = `${OUT}${preview}-${colorScheme}.png`;
         // Make everything behind the element transparent so rounded corners are cut out
@@ -84,16 +82,54 @@ try {
           await page.waitForTimeout(200);
         }
         if (clipTo) {
+          // Draws the same frame the demo pages put around their previews (a bordered, tinted
+          // box around a page-colored one) behind the cropped area, and captures the frame.
           const clip = await page.evaluate((selector) => {
-            const boxes = [...document.querySelectorAll(selector)].map((n) => n.getBoundingClientRect());
-            const pad = 8;
-            const x = Math.min(...boxes.map((b) => b.left)) - pad;
-            const y = Math.min(...boxes.map((b) => b.top)) - pad;
+            const nodes = [...document.querySelectorAll(selector)];
+            const boxes = nodes.map((n) => n.getBoundingClientRect());
+            // Links are as wide as the column, so the right edge follows the text instead.
+            const textRight = nodes.map((n) => {
+              const range = document.createRange();
+              range.selectNodeContents(n);
+              return range.getBoundingClientRect().right;
+            });
+            const inner = {
+              left: Math.min(...boxes.map((b) => b.left)) - 24,
+              top: Math.min(...boxes.map((b) => b.top)) - 16,
+              right: Math.max(...textRight) + 24,
+              bottom: Math.max(...boxes.map((b) => b.bottom)) + 16,
+            };
+            const outer = {
+              left: inner.left - 9,
+              top: inner.top - 9,
+              right: inner.right + 9,
+              bottom: inner.bottom + 9,
+            };
+            const draw = (box, css) => {
+              const div = document.createElement('div');
+              Object.assign(div.style, {
+                position: 'fixed',
+                zIndex: '-1',
+                boxSizing: 'border-box',
+                left: `${box.left}px`,
+                top: `${box.top}px`,
+                width: `${box.right - box.left}px`,
+                height: `${box.bottom - box.top}px`,
+                ...css,
+              });
+              document.body.appendChild(div);
+            };
+            draw(outer, {
+              border: '1px solid var(--color-fd-border)',
+              borderRadius: '16px',
+              background: 'color-mix(in oklab, var(--color-fd-secondary) 50%, transparent)',
+            });
+            draw(inner, { borderRadius: '12px', background: 'var(--color-fd-background)' });
             return {
-              x,
-              y,
-              width: Math.max(...boxes.map((b) => b.right)) + pad - x,
-              height: Math.max(...boxes.map((b) => b.bottom)) + pad - y,
+              x: outer.left,
+              y: outer.top,
+              width: outer.right - outer.left,
+              height: outer.bottom - outer.top,
             };
           }, clipTo);
           await page.screenshot({ path: file, omitBackground: true, clip });
@@ -104,7 +140,6 @@ try {
         console.log('wrote', file);
       }
 
-      if (wide) await page.setViewportSize({ width: 1200, height: 900 });
     }
     await context.close();
   }
