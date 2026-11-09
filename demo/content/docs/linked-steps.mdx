@@ -1,0 +1,38 @@
+---
+title: Linked steps
+description: Steps whose titles appear in the table of contents and can be linked to.
+---
+
+Each step title is listed in the table of contents on the right and can be linked to. Hover a title to copy its link.
+
+<div data-preview="linked-steps" className="w-[560px] rounded-2xl border border-fd-border bg-fd-secondary/50 p-2">
+<div className="flow-root rounded-xl bg-fd-background px-8">
+
+<LinkedSteps>
+
+<LinkedStep title="Install dependencies" data-preview-hover=".fls-step-title">
+
+Run `pnpm add fumadocs-core` in your project.
+
+</LinkedStep>
+
+<LinkedStep title="Configure">
+
+Add the config file and point it at your `content/docs` folder.
+
+</LinkedStep>
+
+<LinkedStep title="Done" icon={<Icon name="check" size={14} />}>
+
+Start the dev server and open the docs.
+
+</LinkedStep>
+
+</LinkedSteps>
+
+</div>
+</div>
+
+## Next steps
+
+Continue with the rest of the guide.
