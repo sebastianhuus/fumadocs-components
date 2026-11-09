@@ -275,6 +275,73 @@ import '@/components/steps/styles/steps.css';
 
 ---
 
+### LinkedSteps
+
+Numbered steps like Steps, where each step title is also listed in the page's table of contents and can be linked to. Hovering a title shows Fumadocs' copy-link button, like on any other heading.
+
+Fumadocs builds the table of contents from markdown headings, and a step title is a JSX attribute, so Steps never show up in it. LinkedSteps comes with a remark plugin that adds the titles for you.
+
+**Dependencies:** `pnpm add fumadocs-ui` (for the heading component). The plugin needs `fumadocs-mdx` and its default remark plugins, which any Fumadocs MDX setup has. Tested with `fumadocs-ui` and `fumadocs-core` 16.15.5 and `fumadocs-mdx` 15.4.0.
+
+**Setup:** Copy `components/linked-steps/`, import the CSS in your layout or `mdx-components.tsx`, register the components, and add the plugin to `source.config.ts`:
+
+```tsx
+// mdx-components.tsx
+import { LinkedSteps, LinkedStep } from '@/components/linked-steps/linked-steps';
+import '@/components/linked-steps/styles/linked-steps.css';
+
+// ...add LinkedSteps and LinkedStep to the components you return
+```
+
+```ts
+// source.config.ts
+import { defineConfig } from 'fumadocs-mdx/config';
+import { remarkLinkedSteps } from './components/linked-steps/remark-linked-steps';
+
+export default defineConfig({
+  mdxOptions: {
+    remarkPlugins: (defaults) => [remarkLinkedSteps, ...defaults],
+  },
+});
+```
+
+**Plugin order matters.** `remarkLinkedSteps` must come first, before the default plugins, which is why the function form is needed. It has to run before Fumadocs' heading plugin, otherwise the step titles stay out of the table of contents and the text `[toc]` shows up on the page. Put any plugins of your own after `...defaults`, because some break when they run before the defaults.
+
+```tsx
+<LinkedSteps>
+  <LinkedStep title="Install dependencies">
+    Run `pnpm add fumadocs-core`.
+  </LinkedStep>
+  <LinkedStep title="Configure">
+    Add the config file.
+  </LinkedStep>
+</LinkedSteps>
+
+{/* Steps under an h2 section: list them at level 3 */}
+<LinkedSteps depth={3}>
+  <LinkedStep title="First">...</LinkedStep>
+</LinkedSteps>
+```
+
+Each titled step gets an id from its title (`Install dependencies` becomes `#install-dependencies`). If a heading or an earlier step already has that id, the step gets `-2`, `-3` and so on. Set `id` on a `LinkedStep` to choose the link yourself.
+
+| Component | Prop | Type | Default | Description |
+|-----------|------|------|---------|-------------|
+| `LinkedSteps` | `type` | `'decimal' \| 'lower-alpha' \| 'upper-alpha' \| 'lower-roman' \| 'upper-roman'` | `'decimal'` | Counter style |
+| `LinkedSteps` | `depth` | `1 \| 2 \| 3 \| 4 \| 5 \| 6` | `2` | Heading level of the step titles, and the level they get in the table of contents |
+| `LinkedStep` | `title` | `ReactNode` | — | Step title. Listed in the table of contents when it is plain text |
+| `LinkedStep` | `icon` | `ReactNode` | — | Custom icon (overrides number) |
+| `LinkedStep` | `id` | `string` | from the title | Anchor id of the step |
+
+**Limits:**
+- Every step with a plain text `title` is listed. There is no way to leave a single step out.
+- A `title` that is not plain text, such as `title={<b>Hi</b>}`, still renders but is not listed and gets no link.
+- Only direct `LinkedStep` children of `LinkedSteps` are handled.
+- Don't use it where the same step is repeated, for example once per operating system in tabs. The titles would be listed twice.
+- Without the plugin, the component still works as plain steps with heading titles.
+
+---
+
 ### RecentlyUpdatedList
 
 List of recently changed pages: a link, an optional small line under it (such as the section) and an optional line under that (such as "Last updated 12 Oct by Ada"). It only lays out the list. It fetches nothing and holds no state, so every piece of text comes in through `items` and you decide where the data comes from.
