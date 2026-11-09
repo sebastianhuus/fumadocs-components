@@ -15,6 +15,11 @@ const pages = [
   ...readdirSync(new URL('../src/app/examples/', import.meta.url)).map((d) => `examples/${d}`),
 ];
 
+// Parts of the page outside the content (such as the table of contents), captured by selector.
+// The table of contents is only shown on wide screens, so these use a wider viewport. `clipTo` crops
+// the capture to the area those elements cover, as the element itself is as tall as the page.
+const regions = [{ page: 'docs/linked-steps', preview: 'linked-steps-toc', selector: '#nd-toc', clipTo: '#toc-title, #nd-toc a', width: 1400 }];
+
 mkdirSync(OUT, { recursive: true });
 
 const server = spawn('pnpm', ['exec', 'next', 'start', '-p', String(PORT)], { stdio: 'inherit' });
@@ -51,8 +56,16 @@ try {
       });
       await page.evaluate(() => document.fonts.ready);
 
-      for (const el of await page.locator('[data-preview]').all()) {
-        const preview = await el.getAttribute('data-preview');
+      const wide = regions.find((r) => r.page === name)?.width;
+      if (wide) await page.setViewportSize({ width: wide, height: 900 });
+
+      const targets = [
+        ...(await page.locator('[data-preview]').all()).map((el) => ({ el, selectorPreview: null, clipTo: null })),
+        ...regions.filter((r) => r.page === name).map((r) => ({ el: page.locator(r.selector), selectorPreview: r.preview, clipTo: r.clipTo })),
+      ];
+
+      for (const { el, selectorPreview, clipTo } of targets) {
+        const preview = selectorPreview ?? (await el.getAttribute('data-preview'));
         const file = `${OUT}${preview}-${colorScheme}.png`;
         // Make everything behind the element transparent so rounded corners are cut out
         // instead of sitting on a page-colored box.
@@ -61,16 +74,37 @@ try {
             a.style.setProperty('background', 'transparent', 'important');
           }
         });
-        // Previews of hover-only UI mark the trigger with `data-preview-hover`.
+        // Previews of hover-only UI mark the trigger with `data-preview-hover`. A value is a
+        // selector inside the marked element to hover instead of the element itself.
         const trigger = el.locator('[data-preview-hover]').first();
         if (await trigger.count()) {
-          await trigger.hover();
+          const inner = await trigger.getAttribute('data-preview-hover');
+          // A bare attribute in JSX is rendered as "true".
+          await (inner && inner !== 'true' ? trigger.locator(inner).first() : trigger).hover();
           await page.waitForTimeout(200);
         }
-        await el.screenshot({ path: file, omitBackground: true });
+        if (clipTo) {
+          const clip = await page.evaluate((selector) => {
+            const boxes = [...document.querySelectorAll(selector)].map((n) => n.getBoundingClientRect());
+            const pad = 8;
+            const x = Math.min(...boxes.map((b) => b.left)) - pad;
+            const y = Math.min(...boxes.map((b) => b.top)) - pad;
+            return {
+              x,
+              y,
+              width: Math.max(...boxes.map((b) => b.right)) + pad - x,
+              height: Math.max(...boxes.map((b) => b.bottom)) + pad - y,
+            };
+          }, clipTo);
+          await page.screenshot({ path: file, omitBackground: true, clip });
+        } else {
+          await el.screenshot({ path: file, omitBackground: true });
+        }
         await page.mouse.move(0, 0);
         console.log('wrote', file);
       }
+
+      if (wide) await page.setViewportSize({ width: 1200, height: 900 });
     }
     await context.close();
   }

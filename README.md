@@ -281,6 +281,24 @@ Numbered steps like Steps, where each step title is also listed in the page's ta
 
 Fumadocs builds the table of contents from markdown headings, and a step title is a JSX attribute, so Steps never show up in it. LinkedSteps comes with a remark plugin that adds the titles for you.
 
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/previews/linked-steps-dark.png">
+    <img alt="LinkedSteps with the copy-link button on the first title" src="docs/previews/linked-steps-light.png" width="420">
+  </picture>
+  <br>
+  <sub>LinkedSteps, hovering the first title shows the copy-link button</sub>
+</p>
+
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/previews/linked-steps-toc-dark.png">
+    <img alt="Table of contents listing the three step titles and the next heading" src="docs/previews/linked-steps-toc-light.png" width="220">
+  </picture>
+  <br>
+  <sub>The page's table of contents lists the step titles</sub>
+</p>
+
 **Dependencies:** `pnpm add fumadocs-ui` (for the heading component). The plugin needs `fumadocs-mdx` and its default remark plugins, which any Fumadocs MDX setup has. Tested with `fumadocs-ui` and `fumadocs-core` 16.15.5 and `fumadocs-mdx` 15.4.0.
 
 **Setup:** Copy `components/linked-steps/`, import the CSS in your layout or `mdx-components.tsx`, register the components, and add the plugin to `source.config.ts`:

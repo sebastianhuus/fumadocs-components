@@ -8,6 +8,8 @@ import { Color, ColorItem, ColorRow } from '@/components/color';
 import { Update } from '@/components/update';
 import { Steps, Step } from '@/components/steps/steps';
 import '@/components/steps/styles/steps.css';
+import { LinkedSteps, LinkedStep } from '@/components/linked-steps/linked-steps';
+import '@/components/linked-steps/styles/linked-steps.css';
 import { RecentlyUpdatedDemo } from '@/demo/recently-updated-demo';
 
 export function getMDXComponents(components?: MDXComponents): MDXComponents {
@@ -16,6 +18,8 @@ export function getMDXComponents(components?: MDXComponents): MDXComponents {
     Frame,
     Steps,
     Step,
+    LinkedSteps,
+    LinkedStep,
     Update,
     Color,
     ColorItem,
